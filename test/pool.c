@@ -681,6 +681,7 @@ static void testPool(const char *testURL) {
         printf("============> Connection Pool Tests: OK\n\n");
 }
 
+/* remove for CI
 int main(void) {
         URL_T url;
         char buf[BSIZE];
@@ -712,5 +713,16 @@ int main(void) {
 next:
                 printf("Connection URL> ");
 	}
+
+	return 0;
+}
+*/
+
+int main(void) {
+        printf("============> Start Connection Pool Tests\n\n");
+        URL_T url;
+        url = URL_new("mysql://localhost:3306/test?user=root&password=\n");
+        testPool(URL_toString(url));
+        URL_free(&url);
 	return 0;
 }

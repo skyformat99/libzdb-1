@@ -17,4 +17,4 @@ distclean-local:
 test: unit pool select
 
 verify:
-	@/bin/sh ./exception && ./unit && ./pool
+	@/bin/sh ./exception && ./unit && ./pool && ./select

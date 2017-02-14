@@ -8,7 +8,10 @@
  */
 
 int main(void) {
-        URL_T url = URL_new("sqlite:///tmp/test.db");
+        printf("============> Start select.c Tests\n\n");
+        //URL_T url = URL_new("sqlite:///tmp/test.db");
+        URL_T url = URL_new("mysql://localhost:3306/test?user=root&password=");
+        
         ConnectionPool_T pool = ConnectionPool_new(url);
         ConnectionPool_start(pool);
         Connection_T con = ConnectionPool_getConnection(pool);
@@ -26,7 +29,9 @@ int main(void) {
                         PreparedStatement_execute(p);
                 }
                 ResultSet_T r = Connection_executeQuery(con,
-                        "select name, datetime(created_at, 'unixepoch', 'localtime') from bleach");
+                        //"select name, datetime(created_at, 'unixepoch', 'localtime') from bleach");
+                        "select * from bleach");
+                printf("%-22s\t %s\n------------------------------------------------------\n", "name", "created_at"); // add header
                 while (ResultSet_next(r))
                         printf("%-22s\t %s\n", ResultSet_getString(r, 1), ResultSet_getString(r, 2));
                 Connection_execute(con, "drop table bleach;");
@@ -42,4 +47,5 @@ int main(void) {
         END_TRY;
         ConnectionPool_free(&pool);
         URL_free(&url);
+        printf("============> select.c Tests: OK\n\n");
 }
